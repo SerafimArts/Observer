@@ -167,3 +167,29 @@ $test->privateProperty = 23; // No error occurs
 
 4) Breaks `__set` "magic" method (It just doesn't work).
 
+5) DCE\Inlining bug (or wtf?):
+```php
+
+class Counter
+{
+    private int $val = 0;
+    public function inc()
+    {
+        $this->val++;
+    }
+    public function add(int $val)
+    {
+        $this->val += $val;
+    }
+}
+
+$counter = new Counter();
+
+Observer::create($counter)
+    ->val->subscribe(fn ($val) => print "value is $val");
+
+$counter->add(1); // OK (prints "value is 1")
+$counter->add(1); // Err (prints nothing if call it twice)
+
+$counter->inc();  // Err (never prints anything)
+```

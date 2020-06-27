@@ -14,6 +14,24 @@ use Serafim\Observer\ObserverInterface;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+
+class Counter
+{
+    private int $val = 0;
+    public function inc()
+    {
+        $this->val++;
+    }
+}
+
+$counter = new Counter();
+
+Observer::create($counter)
+    ->val->subscribe(fn ($val) => print "value is $val");
+
+$counter->inc();
+die;
+
 class Listener
 {
     public static function listen(object $object): ObserverInterface
