@@ -1,0 +1,27 @@
+{
+    "name": "serafim/observer",
+    "description": "Observer library",
+    "license": "WTFPL",
+    "require": {
+        "php": "^7.4",
+        "ext-ffi": "*",
+        "serafim/ffi-loader": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Serafim\\Observer\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.2",
+        "symfony/var-dumper": "~5.0",
+        "serafim/ffi-ide-helper": "~1.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Serafim\\Observer\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
