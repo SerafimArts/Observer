@@ -81,7 +81,7 @@ final class Observer implements ObserverInterface, FactoryInterface
     {
         /** @var object|CData $handlers */
         $handlers = $this->zend->new('zend_object_handlers', false, true);
-        $standard = $this->zend->std_object_handlers;
+        $standard = $this->zendObject->handlers[0];
 
         $this->zend->memcpy($handlers, $standard, $this->zend->sizeof($standard));
 
@@ -97,8 +97,9 @@ final class Observer implements ObserverInterface, FactoryInterface
     public static function create(object $object): ObserverInterface
     {
         static $zend;
+        static $observers = [];
 
-        return new self($zend ??= Zend::load(), $object);
+        return $observers[\get_class($object)] ??= new self($zend ??= Zend::load(), $object);
     }
 
     /**
