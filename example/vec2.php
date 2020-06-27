@@ -11,10 +11,19 @@ class Vector2
 
 $vec2 = new Vector2();
 
-
 $observer = Observer::create($vec2);
-$observer->x->subscribe(fn ($val) => $this->x = $val + 1);
 
-$vec2->x = 23;
+$observer->x
+    ->subscribe(fn ($to, $from) => print "vec2->x changed from $from to $to\n");
 
-var_dump($vec2);
+$observer->y
+    ->subscribe(fn ($to, $from) => print "vec2->y changed from $from to $to\n")
+    ->once();
+
+// first
+$vec2->x = 1;
+$vec2->y = 1;
+
+// second
+$vec2->x = 2;
+$vec2->y = 2;
